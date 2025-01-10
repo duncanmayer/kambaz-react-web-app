@@ -271,6 +271,13 @@ This is a paragraph. We often separate a long set of sentences with vertical spa
         <option value="FANTASY">         Fantasy         </option>
     </select>
 
+    <h4>Anchor tag</h4>
+        Please
+    <a href="https://www.lipsum.com" id="wd-lipsum">click here</a>
+    to get dummy text<br/>
+
+    <a href="https://github.com/duncanmayer/kambaz-react-web-app" id="wd-github">click here</a>
+    for github
 
       </div>
   );}
