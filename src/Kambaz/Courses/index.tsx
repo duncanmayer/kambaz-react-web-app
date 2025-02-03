@@ -1,5 +1,5 @@
 import CourseNavigation from "./Navigation";
-import { Navigate, Route, Routes } from "react-router";
+import { Link, Navigate, Route, Routes } from "react-router";
 import Modules from "./Modules";
 import Home from "./Home";
 import Assignments from "./Assignments";
@@ -9,12 +9,20 @@ import PeopleTable from "./People/Table";
 import Piazza from "./Piazza"
 import Quizzes from "./Quizzes"
 import Zoom from "./Zoom"
+import KambazNavigation from "./KambazNavigation";
 
 export default function Courses() {
     return (
       <div id="wd-courses">
-        <h2 className="text-danger">
-        <FaAlignJustify className="me-4 fs-4 mb-1" />Course 1234</h2>
+        
+        <div className="d-flex justify-content-between align-items-center">
+          <h2 className="text-danger mb-0">
+          <Link to="/Kambaz/Courses/1234/KambazNavigation" className="link-secondary">
+            <FaAlignJustify className="me-4 fs-4 mb-1" />
+          </Link>
+          Course 1234
+        </h2>
+      </div>
         <hr />
         <div className="d-flex">
         <div className="d-none d-md-block">
@@ -31,6 +39,7 @@ export default function Courses() {
               <Route path="Assignments/*" element={<Assignments />} />
               <Route path="Assignments/:aid" element={<AssignmentEditor />} />
               <Route path="People" element={<PeopleTable />} />
+              <Route path="KambazNavigation" element={<KambazNavigation />} />
             </Routes>
             </div></div>
       </div>

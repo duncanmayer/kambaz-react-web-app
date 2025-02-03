@@ -43,5 +43,4 @@ export default function KambazNavigation() {
     className="list-group-item text-white bg-black text-center border-0">
     <LiaCogSolid className="fs-1 text-danger" /><br />
     Labs </Link><br />
-       {/* complete styling the rest of the links */}
   </div>);}
