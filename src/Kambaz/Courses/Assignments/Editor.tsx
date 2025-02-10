@@ -1,100 +1,153 @@
+import { Button, Col, Form, FormControl, FormSelect, InputGroup, Row } from "react-bootstrap";
+import "../../styles.css";
+import { BsCalendar2Week } from "react-icons/bs";
+import { Link } from "react-router-dom";
+
 export default function AssignmentEditor() {
     return (
-      <div id="wd-assignments-editor">
-        <label htmlFor="wd-name">Assignment Name</label>
-        <input id="wd-name" value="A1 - ENV + HTML" /><br /><br />
-        <textarea id="wd-description">
-          The assignment is available online Submit a link to the landing page of
-          I am putting text in this area in order to expand it so as to look more
-          similar to the image we were given on the assignment page.  I don't have any crazy
-          content to go here so for now i am 
-        </textarea>
-        <br />
-        <table>
-          <tr>
-            <td align="right" valign="top">
-              <label htmlFor="wd-points">Points</label>
-            </td>
-            <td>
-              <input id="wd-points" value={100} />
-            </td>
-          </tr>
-          <tr>
-            <td align="right" valign="top">
-                <label htmlFor="wd-group">Assignment Group</label>
-            </td>
-            <td>
-                <select id="wd-group"><option value="ASSIGNMENTS">ASSIGNMENTS</option><option value="G1">Group 1</option><option value="G2">Group 2</option><option value="G3">Group 3</option></select>
-            </td>
-          </tr>
-          <tr>
-            <td align="right" valign="top">
-                <label htmlFor="wd-display-grade-as">Display Grade as</label>
-            </td>
-            <td>
-                <select id="wd-display-grade-as"><option value="Percent">Percentage</option><option value="Decimal">Decimal</option></select>
-            </td>
-          </tr>
-          <tr>
-            <td align="right" valign="top">
-                <label htmlFor="wd-submission-type">Submission Type</label>
-            </td>
-            <td>
-                <select id="wd-submission-type"><option value="Online">Online</option><option value="InPerson">In-Person</option></select>
-                <br /> <br />
-                <label>Online Entry Options</label><br />
+      <div id="wd-editor-container">
+        <br/><br/>
+        <Form>
+          <Form.Group as={Row} className="mb-3">
+            <Form.Label column sm={2} className="text-end"> Assignment Name </Form.Label>
+            <Col sm={10}>
+              <FormControl type="text" placeholder="A1" className="border border-dark w-100 rounded-1" />
+            </Col>
+          </Form.Group>
 
-                <input type="checkbox" name="check-text" id="wd-text-entry"/>
-                <label htmlFor="wd-text-entry">Text Entry</label><br />
+          <Form.Group as={Row} className="mb-3">
+            <Form.Label column sm={2} className="text-end "> Description </Form.Label>
+            <Col sm={10}>
+              <Form.Control as="textarea" style={{ height: "200px" }} className="border border-dark w-100 rounded-1" />
+            </Col>
+          </Form.Group>
 
-                <input type="checkbox" name="check-web-url" id="wd-website-url"/>
-                <label htmlFor="wd-website-url">Website URL</label><br />
+<Form.Group as={Row} className="mb-3">
+  <Col sm={9} className="ms-auto d-flex align-items-center">
+    <span style={{ minWidth: '150px', textAlign: "right",paddingRight: "10px" }}>Points</span> 
+    <Form.Control type="number" placeholder="100" className="border border-dark w-100 rounded-1" />
+  </Col>
+</Form.Group>
 
-                <input type="checkbox" name="check-media" id="wd-media-recordings"/>
-                <label htmlFor="wd-media-recordings">Media Recordings</label><br />
+<Form.Group as={Row} className="mb-3">
+  <Col sm={9} className="ms-auto d-flex align-items-center">
+    <span style={{ minWidth: '150px', textAlign: "right", paddingRight: "10px"}}>Assignment Group</span> 
+    <FormSelect className="border border-dark w-100 rounded-1">
+      <option selected>ASSIGNMENTS</option>
+      <option value="A1">A1</option>
+      <option value="A2">A2</option>
+      <option value="A3">A3</option>
+    </FormSelect>
+  </Col>
+</Form.Group>
 
-                <input type="checkbox" name="check-annotation" id="wd-student-annotation"/>
-                <label htmlFor="wd-student-annotation">Student Annotation</label><br />
+<Form.Group as={Row} className="mb-3 d-flex justify-content-end">
+  <Col sm={9} className="ms-auto d-flex align-items-center">
+    <span style={{ minWidth: '150px', textAlign: "right", paddingRight: "10px" }}>Display Grade as</span>
+    <FormSelect className="border border-dark w-100 rounded-1">
+      <option selected>Percentage</option>
+      <option value="decimal">Decimal</option>
+      <option value="raw">Raw</option>
+      <option value="letter">Letter</option>
+    </FormSelect>
+  </Col>
+</Form.Group>
 
-                <input type="checkbox" name="check-uploads" id="wd-file-upload"/>
-                <label htmlFor="wd-file-upload">File Uploads</label>
-            </td>
-          </tr>
-          <tr>
-            <td align="right" valign="top">
-                <label htmlFor="wd-assign-to">Assign</label>
-            </td>
-            <table>
-            <tr>
-            <td align="left" valign="top">
-                Assign to <br/>
-                <input type="string" placeholder="Everyone" id="wd-assign-to" value="Everyone">
-                </input>
-            </td>
-            </tr>
-            <tr>
-            <td align="left" valign="top">
-                Due <br/>
-                <input type="date" id="wd-due-date" value="2024-05-13"></input>
-            </td>
-            </tr>
-
-            <tr>
-                <td align="left" valign="top">
-                    Available From <br/>
-                    <input type="date" id="wd-available-from" value="2024-05-06"></input>
-                </td>
-                <td align="left" valign="top">
-                    Until <br/>
-                    <input type="date" id="wd-available-until" value="2024-05-20"></input>
-                </td>
-            </tr>
-            </table>
-          </tr>
-        </table>
-        <hr/>
-        <button>Cancel</button>
-        <button>Save</button>
+<Form.Group as={Row} className="mb-3 d-flex justify-content-end">
+  <Col sm={9} className="ms-auto d-flex align-items-start">
+    <span style={{ minWidth: '150px', textAlign: "right", paddingRight: "10px" }}> Submission Type</span>
+    <Form.Group className="border border-dark w-100 rounded-1 p-3">
+      <FormSelect className="border border-dark w-100 rounded-1 p-2">
+        <option selected>Online</option>
+        <option value="inPerson">In Person</option>
+        <option value="mail">Mail-in</option>
+      </FormSelect>
+      <br/>
+      <b>Online Entry Options</b>
+      <div>
+        <br/>
+        <Form.Check
+          type="checkbox"
+          label="Text Entry"
+          className="me-3 custom-checkbox"/>
+          <br/>
+        <Form.Check
+          type="checkbox"
+          label="Website URL"
+          className="me-3 custom-checkbox"/>
+          <br/>
+        <Form.Check
+          type="checkbox"
+          label="Media Recordings"
+          className="me-3 custom-checkbox"/>
+          <br/>
+        <Form.Check
+          type="checkbox"
+          label="Student Annotation"
+          className="me-3 custom-checkbox"/>
+          <br/>
+        <Form.Check
+          type="checkbox"
+          label="File Uploads"
+          className="me-3 custom-checkbox"/>
+          <br/>
       </div>
-  );}
-  
+    </Form.Group>
+  </Col>
+</Form.Group>
+
+<Form.Group as={Row} className="mb-3 d-flex">
+  <Col sm={9} className="ms-auto d-flex align-items-start">
+    <span style={{ minWidth: '150px', textAlign: "right", paddingRight: "10px" }}> Assign</span>
+    <Form.Group className="border border-dark w-100 rounded-1 p-3">
+      <h5><b>Assign To</b></h5>
+
+    <Form.Control type="number" placeholder="Everyone" className="border border-dark w-100 rounded-1" />
+
+      <br/>
+     <h6><b>Due</b></h6>
+    <InputGroup className="mb-3">
+    <FormControl type="text" placeholder="February 03, 2025, 11:59PM" />
+    <InputGroup.Text><BsCalendar2Week/></InputGroup.Text>
+    </InputGroup>
+
+      <br/>
+      <Form.Group as={Row} className="mb-3 d-flex flex-wrap">
+      <Col sm={6} className="flex-grow-1">
+        <Form.Label className="d-block text-start"><b>Available from</b></Form.Label>
+        <InputGroup className="mb-3">
+          <FormControl type="text" placeholder="February 03, 2025, 12:00AM" />
+          <InputGroup.Text><BsCalendar2Week /></InputGroup.Text>
+        </InputGroup>
+      </Col>
+
+      <Col sm={6} className="flex-grow-1">
+        <Form.Label className="d-block text-start"><b>Until</b></Form.Label>
+        <InputGroup className="mb-3">
+          <FormControl type="text" placeholder="" />
+          <InputGroup.Text><BsCalendar2Week /></InputGroup.Text>
+        </InputGroup>
+      </Col>
+    </Form.Group>
+    </Form.Group>
+  </Col>
+</Form.Group>
+        </Form>
+      <hr/>
+
+      <div className="d-flex justify-content-end p-2">
+        <Link to="/Kambaz/Courses/:cid/Assignments">
+      <Button variant="secondary" size="lg" className=" mt-1 text-start rounded-1 me-2">
+        Cancel
+        </Button>
+        </Link>
+        <Link to="/Kambaz/Courses/:cid/Assignments">
+      <Button variant="danger" size="lg" className=" mt-1 text-start rounded-1">
+        Save
+        </Button>
+        </Link>
+      </div>
+        
+      </div>
+    );
+}
