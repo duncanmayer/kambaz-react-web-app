@@ -23,8 +23,9 @@ export default function CourseNavigation() {
           className={`list-group-item ${
             location.pathname === `/Kambaz/Courses/${cid}/${link}`
               ? "active"
-              : ""
-          } ${link !== "Home" ? "text-danger" : ""} border border-0`}
+              : "text-danger"
+          } 
+          border border-0`}
         >
           {link}
         </Link>
