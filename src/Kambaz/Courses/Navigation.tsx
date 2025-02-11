@@ -24,7 +24,7 @@ export default function CourseNavigation() {
             location.pathname === `/Kambaz/Courses/${cid}/${link}`
               ? "active"
               : "text-danger"
-          } 
+          }  
           border border-0`}
         >
           {link}
