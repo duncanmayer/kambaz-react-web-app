@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Container, ListGroup } from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
 import {
@@ -8,11 +9,14 @@ import {
 import AssignmentControls from "./AssignmentControls";
 import LessonControlButtons from "../Modules/LessonControlButtons";
 import AssignmentControlButtons from "./AssignmentControlButtons";
-import * as db from "../../Database";
+import { useSelector } from "react-redux";
 
 export default function Assignments() {
   const { cid } = useParams();
-  const assignments = db.assignments;
+  // const assignments = db.assignments;
+  const { assignments } = useSelector((state: any) => state.assignmentsReducer);
+  const { currentUser } = useSelector((state: any) => state.accountReducer);
+  const isFaculty = currentUser.role === "FACULTY";
   return (
     <div id="wd-assignments">
       <AssignmentControls />
@@ -27,8 +31,8 @@ export default function Assignments() {
 
           <ListGroup className="wd-lessons rounded-0">
             {assignments
-              .filter((assignment) => assignment.course === cid)
-              .map((assignment) => (
+              .filter((assignment : any) => assignment.course === cid)
+              .map((assignment : any) => (
                 <ListGroup.Item
                   key={assignment._id}
                   className="wd-lesson p-3 ps-1"
@@ -40,10 +44,10 @@ export default function Assignments() {
                     <Container className="mt-3">
                       <h3>
                         <Link
-                          to={`/Kambaz/Courses/${cid}/Assignments/${assignment._id}`}
+                          to={isFaculty ? `/Kambaz/Courses/${cid}/Assignments/${assignment._id}` : `/Kambaz/Courses/${cid}/Assignments`}
                           className="text-decoration-none"
                         >
-                          {assignment._id}
+                          {assignment.title}
                         </Link>
                       </h3>
 
@@ -57,11 +61,11 @@ export default function Assignments() {
                           {" "}
                           | <b>Due </b> {assignment.due}{" "}
                         </div>
-                        <div> | 100pts </div>
+                        <div> | {assignment.points}pts </div>
                       </div>
                     </Container>
 
-                    <LessonControlButtons />
+                    <LessonControlButtons id={assignment._id} isAssignment={true} />
                   </div>
                 </ListGroup.Item>
               ))}

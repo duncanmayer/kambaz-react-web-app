@@ -11,17 +11,31 @@ import "../../styles.css";
 import { BsCalendar2Week } from "react-icons/bs";
 import { Link, useParams } from "react-router-dom";
 import * as db from "../../Database";
+import { addAssignment, updateAssignment } from "./reducer";
+import { useDispatch } from "react-redux";
+import { useState } from "react";
 
 export default function AssignmentEditor() {
   const { cid, aid } = useParams();
-  const assignment = db.assignments.find((assn) => assn._id === aid && assn.course === cid) || 
-  {
-    "title": "Assignment Name",
-    "description": "Description",
-    "points": "100",
-    "due": "N/A",
-    "available": "N/A",
+  const dispatch = useDispatch();
+  const assignment = db.assignments.find(
+    (assn) => assn._id === aid && assn.course === cid
+  ) || {
+    title: "Assignment Name",
+    description: "Description",
+    points: "100",
+    due: "N/A",
+    available: "N/A",
   };
+
+  const [title, setTitle] = useState(assignment.title);
+  const [description, setDescription] = useState(
+    assignment.description
+  );
+  const [points, setPoints] = useState(assignment.points);
+  const [due, setDue] = useState(assignment.due);
+  const [available, setAvailable] = useState(assignment.available);
+
   return (
     <div id="wd-editor-container">
       <br />
@@ -37,6 +51,7 @@ export default function AssignmentEditor() {
               type="text"
               placeholder={assignment.title}
               className="border border-dark w-100 rounded-1"
+              onChange={(e) => setTitle(e.target.value)}
             />
           </Col>
         </Form.Group>
@@ -52,6 +67,7 @@ export default function AssignmentEditor() {
               style={{ height: "200px" }}
               placeholder={assignment.description}
               className="border border-dark w-100 rounded-1"
+              onChange={(e) => setDescription(e.target.value)}
             />
           </Col>
         </Form.Group>
@@ -69,8 +85,9 @@ export default function AssignmentEditor() {
             </span>
             <Form.Control
               type="number"
-              placeholder={ assignment.points ?? "100" }
+              placeholder={assignment.points ?? "100"}
               className="border border-dark w-100 rounded-1"
+              onChange={(e) => setPoints(e.target.value + "pts")}
             />
           </Col>
         </Form.Group>
@@ -200,10 +217,7 @@ export default function AssignmentEditor() {
                 <b>Due</b>
               </h6>
               <InputGroup className="mb-3">
-                <FormControl
-                  type="text"
-                  placeholder={assignment.due}
-                />
+                <FormControl type="text" placeholder={assignment.due} onChange={(e) => setDue(e.target.value)}/>
                 <InputGroup.Text>
                   <BsCalendar2Week />
                 </InputGroup.Text>
@@ -219,6 +233,7 @@ export default function AssignmentEditor() {
                     <FormControl
                       type="text"
                       placeholder={assignment.available}
+                      onChange={(e) => setAvailable(e.target.value)}
                     />
                     <InputGroup.Text>
                       <BsCalendar2Week />
@@ -259,6 +274,35 @@ export default function AssignmentEditor() {
             variant="danger"
             size="lg"
             className=" mt-1 text-start rounded-1"
+            onClick={() => {
+              if (
+                db.assignments.find(
+                  (assn) => assn._id === aid && assn.course === cid
+                )
+              ) {
+                console.log("do update");
+                dispatch(updateAssignment({
+                  _id: aid,
+                  title,
+                  description,
+                  points,
+                  due, 
+                  available,
+                  course: cid,
+                }))
+              } else {
+                dispatch(
+                  addAssignment({
+                    title,
+                    description,
+                    points,
+                    due, 
+                    available,
+                    course: cid,
+                  })
+                );
+              }
+            }}
           >
             Save
           </Button>

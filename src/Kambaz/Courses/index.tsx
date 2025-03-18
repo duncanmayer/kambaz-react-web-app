@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import CourseNavigation from "./Navigation";
 import { Link, Navigate, Route, Routes, useParams } from "react-router";
 import Modules from "./Modules";
@@ -11,9 +12,8 @@ import Quizzes from "./Quizzes";
 import Zoom from "./Zoom";
 import Grades from "./Grades"
 import KambazNavigation from "./KambazNavigation";
-import { courses } from "../Database";
 
-export default function Courses() {
+export default function Courses({ courses }: { courses: any[]; }) {
   const { cid } = useParams();
   const course = courses.find((course) => course._id === cid);
   return (
