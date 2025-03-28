@@ -41,10 +41,28 @@ export default function TOC() {
         </Nav.Link>
       </Nav.Item>
       <Nav.Item>
+        <Nav.Link
+          href="#/Labs/Lab5"
+          className={`nav-link ${pathname.includes("Lab5") ? "active" : ""}`}
+        >
+          Lab 5
+        </Nav.Link>
+      </Nav.Item>
+      <Nav.Item>
         <Nav.Link href="#/Kambaz">Kambaz</Nav.Link>
       </Nav.Item>
       <Nav.Item>
         <Nav.Link href="https://github.com/duncanmayer">My GitHub</Nav.Link>
+      </Nav.Item>
+      <Nav.Item>
+        <Nav.Link href="https://github.com/duncanmayer/kambaz-node-server-app">
+          My Node Github
+        </Nav.Link>{" "}
+      </Nav.Item>
+      <Nav.Item>
+        <Nav.Link href="https://kambaz-node-server-app-4eqm.onrender.com/">
+          My Render Root
+        </Nav.Link>
       </Nav.Item>
     </Nav>
   );

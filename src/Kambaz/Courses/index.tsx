@@ -44,7 +44,7 @@ export default function Courses({ courses }: { courses: any[]; }) {
             <Route path="Zoom" element={<Zoom />} />
             <Route path="Grades" element={<Grades />} />
             <Route path="Assignments/*" element={<Assignments />} />
-            <Route path="Assignments/:aid" element={<AssignmentEditor />} />
+            <Route path="Assignments/:aid/:isEditing" element={<AssignmentEditor />} />
             <Route path="People" element={<PeopleTable />} />
             <Route path="KambazNavigation" element={<KambazNavigation />} />
           </Routes>

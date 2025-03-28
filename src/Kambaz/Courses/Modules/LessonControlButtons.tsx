@@ -5,6 +5,8 @@ import { useDispatch } from "react-redux";
 import { deleteAssignment } from "../Assignments/reducer";
 import { Button, Modal } from "react-bootstrap";
 import { useState } from "react";
+import * as assignmentsClient from "../Assignments/client";
+
 export default function LessonControlButtons({
   id,
   isAssignment,
@@ -14,7 +16,8 @@ export default function LessonControlButtons({
 }) {
   const dispatch = useDispatch();
   const [showModal, setShowModal] = useState(false);
-  const handleDelete = () => {
+  const handleDelete = async () => {
+    await assignmentsClient.deleteAssignment(id);
     dispatch(deleteAssignment(id));
     setShowModal(false);
   };

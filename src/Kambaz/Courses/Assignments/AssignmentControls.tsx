@@ -7,8 +7,9 @@ import { useNavigate, useParams } from "react-router-dom";
 export default function AssignmentControls() {
   const navigate = useNavigate();
   const { cid, aid } = useParams();
+  const isEditing = false; // we are creating a new assignment, not editing an existing one
   const editor = () => {
-    navigate(`/Kambaz/Courses/${cid}/Assignments/${aid}`);
+    navigate(`/Kambaz/Courses/${cid}/Assignments/${aid}/${isEditing}`);
   };
   return (
     <div

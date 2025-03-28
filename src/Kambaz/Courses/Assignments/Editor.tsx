@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   Button,
   Col,
@@ -10,31 +11,76 @@ import {
 import "../../styles.css";
 import { BsCalendar2Week } from "react-icons/bs";
 import { Link, useParams } from "react-router-dom";
-import * as db from "../../Database";
 import { addAssignment, updateAssignment } from "./reducer";
 import { useDispatch } from "react-redux";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import * as assignmentsClient from "../Assignments/client";
+import * as coursesClient from "../client";
+// import { v4 as uuidv4 } from "uuid";
+
 
 export default function AssignmentEditor() {
-  const { cid, aid } = useParams();
+  const { cid, aid, isEditing } = useParams();
   const dispatch = useDispatch();
-  const assignment = db.assignments.find(
-    (assn) => assn._id === aid && assn.course === cid
-  ) || {
+  // const newId = uuidv4();
+
+  const [assignment, setAssignment] = useState({
     title: "Assignment Name",
     description: "Description",
     points: "100",
     due: "N/A",
     available: "N/A",
+  });
+
+  const fetchAssignment = async () => {
+    const assignment = await coursesClient.findAssignmentById(aid as string);
+    if (assignment) {
+      setAssignment(assignment);
+    }
   };
 
+  useEffect(() => {
+    if (isEditing === "true") {
+      fetchAssignment();
+    }
+  }, []);
+
   const [title, setTitle] = useState(assignment.title);
-  const [description, setDescription] = useState(
-    assignment.description
-  );
+  const [description, setDescription] = useState(assignment.description);
   const [points, setPoints] = useState(assignment.points);
   const [due, setDue] = useState(assignment.due);
   const [available, setAvailable] = useState(assignment.available);
+
+  const saveAssignment = async () => {
+    const updatedAssignment = {
+      ...assignment,
+      title: title,
+      description: description,
+      points: points,
+      due: due,
+      available: available,
+    };
+    await assignmentsClient.updateAssignment(updatedAssignment);
+    dispatch(updateAssignment(updatedAssignment));
+  };
+
+  const createAssignmentForCourse = async () => {
+    if (!cid) return;
+    const newAssignment = {
+      title: title,
+      description: description,
+      due: due,
+      available: available,
+      points: points,
+      course: cid,
+      // _id: newId,
+    };
+    const _assignment = await coursesClient.createAssignmentForCourse(
+      cid,
+      newAssignment
+    );
+    dispatch(addAssignment(_assignment));
+  };
 
   return (
     <div id="wd-editor-container">
@@ -217,7 +263,11 @@ export default function AssignmentEditor() {
                 <b>Due</b>
               </h6>
               <InputGroup className="mb-3">
-                <FormControl type="text" placeholder={assignment.due} onChange={(e) => setDue(e.target.value)}/>
+                <FormControl
+                  type="text"
+                  placeholder={assignment.due}
+                  onChange={(e) => setDue(e.target.value)}
+                />
                 <InputGroup.Text>
                   <BsCalendar2Week />
                 </InputGroup.Text>
@@ -275,32 +325,10 @@ export default function AssignmentEditor() {
             size="lg"
             className=" mt-1 text-start rounded-1"
             onClick={() => {
-              if (
-                db.assignments.find(
-                  (assn) => assn._id === aid && assn.course === cid
-                )
-              ) {
-                console.log("do update");
-                dispatch(updateAssignment({
-                  _id: aid,
-                  title,
-                  description,
-                  points,
-                  due, 
-                  available,
-                  course: cid,
-                }))
+              if (isEditing === 'true') {
+                saveAssignment();
               } else {
-                dispatch(
-                  addAssignment({
-                    title,
-                    description,
-                    points,
-                    due, 
-                    available,
-                    course: cid,
-                  })
-                );
+                createAssignmentForCourse();
               }
             }}
           >

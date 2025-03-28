@@ -2,9 +2,8 @@
 // import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Card, Col, Row } from "react-bootstrap";
-import { useDispatch, useSelector } from "react-redux";
-import { useState } from "react";
-import { enroll, unenroll } from "./Courses/reducer";
+import { useSelector } from "react-redux";
+
 export default function Dashboard({
   courses,
   course,
@@ -21,11 +20,7 @@ export default function Dashboard({
   updateCourse: () => void;
 }) {
   const { currentUser } = useSelector((state: any) => state.accountReducer);
-  const { enrollments } = useSelector((state: any) => state.enrollmentsReducer);
   const isFaculty = currentUser.role === "FACULTY";
-  const isStudent = currentUser.role === "STUDENT";
-  const [enrollmentsSelected, setEnrollmentsSelected] = useState(false);
-  const dispatch = useDispatch();
   return (
     <div id="wd-dashboard">
       <h1 id="wd-dashboard-title">Dashboard</h1> <hr />
@@ -65,51 +60,36 @@ export default function Dashboard({
           />{" "}
         </div>
       )}{" "}
-      {isStudent && (
+      <br/>
+      <hr/>
+
         <h5>
           Enroll in Courses
+          <Link to={`/Kambaz/Enrollments`}
+                    className="wd-dashboard-course-link text-decoration-none text-dark"
+                  >
           <button
-            className="btn btn-primary float-end"
+            className="btn btn-success float-end"
             id="wd-add-new-course-click"
-            onClick={() => setEnrollmentsSelected(!enrollmentsSelected)}
           >
             {" "}
             Enrollments{" "}
           </button>
+          </Link>
         </h5>
-      )}{" "}
+        <br/>
       <hr />
       <h2 id="wd-dashboard-published">
-        Published Courses (
+        Current Courses (
         {
-          courses.filter(
-            (course) =>
-              isFaculty || 
-              enrollmentsSelected ||
-              enrollments.some(
-                (enrollment: any) =>
-                  enrollment.user === currentUser._id &&
-                  enrollment.course === course._id
-              )
-          ).length
+          courses.length
         }
         )
       </h2>{" "}
       <hr />
       <div id="wd-dashboard-courses">
         <Row xs={1} md={5} className="g-4">
-          {courses
-            .filter(
-              (course) =>
-                isFaculty ||
-                enrollmentsSelected ||
-                enrollments.some(
-                  (enrollment: any) =>
-                    enrollment.user === currentUser._id &&
-                    enrollment.course === course._id
-                )
-            )
-            .map((course) => (
+          {courses.map((course) => (
               <Col className="wd-dashboard-course" style={{ width: "300px" }}>
                 <Card>
                       <img
@@ -128,52 +108,11 @@ export default function Dashboard({
                       {course.description}{" "}
                     </p>
                       <Link
-                         to={
-                          enrollments.some(
-                            (enrollment: any) =>
-                              enrollment.user === currentUser._id && enrollment.course === course._id
-                          ) || isFaculty
-                            ? `/Kambaz/Courses/${course._id}/Home` 
-                            : "#" 
-                        }
+                         to={`/Kambaz/Courses/${course._id}/Home`}
                         className="wd-dashboard-course-link text-decoration-none text-dark"
                       >
                         <button className="btn btn-primary"> Go </button>
                       </Link>
-                    {isStudent &&
-                      enrollments.some(
-                        (enrollment: any) =>
-                          enrollment.user === currentUser._id &&
-                          enrollment.course === course._id
-                      ) && (
-                        <button
-                          className="btn btn-danger float-end"
-                          onClick={() =>
-                            dispatch(
-                              unenroll({ user: currentUser, course: course })
-                            )
-                          }
-                        >
-                          Unenroll
-                        </button>
-                      )}
-                    {isStudent &&
-                      !enrollments.some(
-                        (enrollment: any) =>
-                          enrollment.user === currentUser._id &&
-                          enrollment.course === course._id
-                      ) && (
-                        <button
-                          className="btn btn-success float-end"
-                          onClick={() =>
-                            dispatch(
-                              enroll({ user: currentUser, course: course })
-                            )
-                          }
-                        >
-                          Enroll
-                        </button>
-                      )}
                     {isFaculty && (
                       <button
                         onClick={(event) => {
