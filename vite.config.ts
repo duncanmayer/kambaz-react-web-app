@@ -1,7 +1,17 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+import { defineConfig, loadEnv } from "vite";
 
-// https://vite.dev/config/
-export default defineConfig({
-  plugins: [react()],
-})
+export default defineConfig(({ mode }) => {
+  // Ensure mode is always a string
+  const envMode = mode || "development"; 
+
+  // Load environment variables
+  const env = loadEnv(envMode, process.cwd(), "");
+
+  console.log("Loaded ENV Variables:", env); // Debugging
+
+  return {
+    define: {
+      "process.env": env, // Expose environment variables
+    },
+  };
+});

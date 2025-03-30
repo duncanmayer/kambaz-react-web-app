@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from "axios";
-const REMOTE_SERVER =
-  import.meta.env.VITE_REMOTE_SERVER || "http://localhost:4000";
+const REMOTE_SERVER =process.env.VITE_REMOTE_SERVER;
 
 export const fetchWelcomeMessage = async () => {
   const response = await axios.get(`${REMOTE_SERVER}/lab5/welcome`);

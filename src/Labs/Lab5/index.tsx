@@ -6,7 +6,7 @@ import WorkingWithArrays from "./WorkingWithArrays";
 import HttpClient from "./HttpClient";
 import WorkingWithObjectsAsynchronously from "./WorkingWithObjectsAsynchronously";
 import WorkingWithArraysAsynchronously from "./WorkingWithArraysAsynchronously";
-const REMOTE_SERVER = import.meta.env.VITE_REMOTE_SERVER || "http://localhost:4000";
+const REMOTE_SERVER = process.env.VITE_REMOTE_SERVER;
 export default function Lab5() {
   return (
     <div id="wd-lab5">

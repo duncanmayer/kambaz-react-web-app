@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from "axios";
 const REMOTE_SERVER =
-  import.meta.env.VITE_REMOTE_SERVER || "http://localhost:4000";
+  process.env.VITE_REMOTE_SERVER;
 
 const MODULES_API = `${REMOTE_SERVER}/api/modules`;
 

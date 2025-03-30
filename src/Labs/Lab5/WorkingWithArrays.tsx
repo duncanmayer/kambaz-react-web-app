@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 const REMOTE_SERVER =
-  import.meta.env.VITE_REMOTE_SERVER || "http://localhost:4000";
+  process.env.VITE_REMOTE_SERVER;
 export default function WorkingWithArrays() {
   const API = `${REMOTE_SERVER}/lab5/todos`;
   const [todo, setTodo] = useState({
