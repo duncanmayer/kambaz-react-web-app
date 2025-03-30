@@ -7,7 +7,7 @@ export default defineConfig(({ mode }) => {
 
   console.log("Loaded ENV Variables:", env); // debug
   console.log("Netlify process env remote server:", process.env.VITE_REMOTE_SERVER);
-  console.log("Netlify env remote server:", process.env.VITE_REMOTE_SERVER);
+  console.log("Netlify env remote server: ", process.env.VITE_REMOTE_SERVER);
 
   return {
     define: { 
