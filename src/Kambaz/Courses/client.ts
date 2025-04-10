@@ -3,7 +3,7 @@ import axios from "axios";
 const REMOTE_SERVER =
   process.env.VITE_REMOTE_SERVER;
 const COURSES_API = `${REMOTE_SERVER}/api/courses`;
-
+const axiosWithCredentials = axios.create({ withCredentials: true });
 /****************************** Module API Section ***************************/
 
 export const createModuleForCourse = async (courseId: string, module: any) => {
@@ -56,7 +56,7 @@ export const findAssignmentById = async (assignmentId: string) => {
 /*************************** Courses API Section ****************************/
 
 export const fetchAllCourses = async () => {
-  const { data } = await axios.get(COURSES_API);
+  const { data } = await axiosWithCredentials.get(COURSES_API);
   return data;
 };
 
@@ -74,12 +74,12 @@ export const updateCourse = async (course: any) => {
 
 
 /** Enrollments */
-export const enrollInCourse = async (courseId: string, userId: string) => {
+export const enrollInCourse = async (userId: string, courseId: string) => {
     const response = await axios.put(`${REMOTE_SERVER}/api/enrollments/${userId}/${courseId}`);
     return response;
 }
 
-export const unenrollFromCourse = async (courseId: string, userId: string) => {
+export const unenrollFromCourse = async (userId: string, courseId: string) => {
     const response = await axios.delete(`${REMOTE_SERVER}/api/enrollments/${userId}/${courseId}`);
     return response;
 }

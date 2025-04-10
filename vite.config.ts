@@ -11,7 +11,7 @@ export default defineConfig(({ mode }) => {
     define: {
       "process.env": {
         ...env,
-        VITE_REMOTE_SERVER: process.env.VITE_REMOTE_SERVER,
+        VITE_REMOTE_SERVER: env.VITE_REMOTE_SERVER,
       },
     },
   };
