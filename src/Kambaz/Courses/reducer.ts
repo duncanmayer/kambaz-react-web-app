@@ -10,7 +10,6 @@ const enrollmentsSlice = createSlice({
   initialState,
   reducers: {
     enroll: (state, { payload: enrollment }) => {
-      console.log("enroll", enrollment);
       const newEnrollment: any = {
         _id: uuidv4(),
         course: enrollment.course._id,
@@ -19,7 +18,6 @@ const enrollmentsSlice = createSlice({
       state.enrollments = [...state.enrollments, newEnrollment] as any;
     },
     unenroll: (state, { payload: enrollment }) => {
-      console.log(`unenroll ${enrollment}`);
       state.enrollments = state.enrollments.filter(
         (m: any) => m.user !== enrollment.user._id || m.course !== enrollment.course._id
       ) as any;

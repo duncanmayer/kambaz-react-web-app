@@ -12,10 +12,26 @@ import Quizzes from "./Quizzes";
 import Zoom from "./Zoom";
 import Grades from "./Grades"
 import KambazNavigation from "./KambazNavigation";
+import {findUsersForCourse} from "./client"
+import { useEffect, useState } from "react";
 
 export default function Courses({ courses }: { courses: any[]; }) {
   const { cid } = useParams();
   const course = courses.find((course) => course._id === cid);
+  const [courseUsers, setCourseUsers] = useState<any[]>([]);
+  const fetchCourseUsers = async () => {
+    try {
+      if (cid) {
+        const users = await findUsersForCourse(cid);
+        setCourseUsers(users);
+      }
+    } catch (error) {
+      console.error("Error fetching course users:", error);
+    }
+  };
+  useEffect(() => {
+    fetchCourseUsers();
+  }, [cid]);
   return (
     <div id="wd-courses">
       <div className="d-flex justify-content-between align-items-center">
@@ -45,7 +61,7 @@ export default function Courses({ courses }: { courses: any[]; }) {
             <Route path="Grades" element={<Grades />} />
             <Route path="Assignments/*" element={<Assignments />} />
             <Route path="Assignments/:aid/:isEditing" element={<AssignmentEditor />} />
-            <Route path="People" element={<PeopleTable />} />
+            <Route path="People" element={<PeopleTable users={courseUsers}/>} />
             <Route path="KambazNavigation" element={<KambazNavigation />} />
           </Routes>
         </div>

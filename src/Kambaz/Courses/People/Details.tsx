@@ -33,7 +33,6 @@ export default function PeopleDetails() {
   };
 
   useEffect(() => {
-    console.log("uid is " + uid);
     if (uid) fetchUser();
   }, [uid]);
 
